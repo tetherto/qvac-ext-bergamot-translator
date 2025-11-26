@@ -155,13 +155,33 @@ AlignedMemory getQualityEstimatorModel(MemoryBundle& memoryBundle, const marian:
 }
 
 MemoryBundle getMemoryBundleFromConfig(marian::Ptr<marian::Options> options) {
+  fprintf(stderr, "[BERGAMOT] getMemoryBundleFromConfig: starting\n");
+  fflush(stderr);
+
   MemoryBundle memoryBundle;
+
+  fprintf(stderr, "[BERGAMOT] getMemoryBundleFromConfig: loading models\n");
+  fflush(stderr);
   memoryBundle.models = getModelMemoryFromConfig(options);
+
+  fprintf(stderr, "[BERGAMOT] getMemoryBundleFromConfig: loading shortlist\n");
+  fflush(stderr);
   memoryBundle.shortlist = getShortlistMemoryFromConfig(options);
+
+  fprintf(stderr, "[BERGAMOT] getMemoryBundleFromConfig: loading vocabs\n");
+  fflush(stderr);
   getVocabsMemoryFromConfig(options, memoryBundle.vocabs);
+
+  fprintf(stderr, "[BERGAMOT] getMemoryBundleFromConfig: loading ssplit prefix file\n");
+  fflush(stderr);
   memoryBundle.ssplitPrefixFile = getSsplitPrefixFileMemoryFromConfig(options);
+
+  fprintf(stderr, "[BERGAMOT] getMemoryBundleFromConfig: loading quality estimator\n");
+  fflush(stderr);
   memoryBundle.qualityEstimatorMemory = getQualityEstimatorModel(options);
 
+  fprintf(stderr, "[BERGAMOT] getMemoryBundleFromConfig: completed\n");
+  fflush(stderr);
   return memoryBundle;
 }
 

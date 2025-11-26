@@ -24,7 +24,13 @@ TranslationModel::TranslationModel(const Config &options, MemoryBundle &&memory 
       textProcessor_(options, vocabs_, std::move(memory_.ssplitPrefixFile)),
       batchingPool_(options),
       qualityEstimator_(createQualityEstimator(getQualityEstimatorModel(memory, options))) {
+  fprintf(stderr, "[BERGAMOT] TranslationModel constructor: entering body\n");
+  fflush(stderr);
+
   ABORT_IF(replicas == 0, "At least one replica needs to be created.");
+
+  fprintf(stderr, "[BERGAMOT] TranslationModel constructor: resizing backend\n");
+  fflush(stderr);
   backend_.resize(replicas);
 
   // Try to load shortlist from memory-bundle. If not available, try to load from options_;
