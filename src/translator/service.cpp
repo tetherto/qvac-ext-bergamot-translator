@@ -61,22 +61,30 @@ std::vector<Response> BlockingService::translateMultiple(std::shared_ptr<Transla
 std::vector<Response> BlockingService::translateMultipleRaw(std::shared_ptr<TranslationModel> translationModel,
                                                             std::vector<std::string> &&sources,
                                                             const std::vector<ResponseOptions> &responseOptions) {
+  std::cerr << "[BERGAMOT_SERVICE] translateMultipleRaw: Starting with " << sources.size() << " sources" << std::endl;
   std::vector<Response> responses;
   responses.resize(sources.size());
 
+  std::cerr << "[BERGAMOT_SERVICE] translateMultipleRaw: Creating requests" << std::endl;
   for (size_t i = 0; i < sources.size(); i++) {
     auto callback = [i, &responses](Response &&response) { responses[i] = std::move(response); };  //
     Ptr<Request> request =
         translationModel->makeRequest(requestId_++, std::move(sources[i]), callback, responseOptions[i], cache_);
+    std::cerr << "[BERGAMOT_SERVICE] translateMultipleRaw: Enqueuing request " << i << std::endl;
     batchingPool_.enqueueRequest(translationModel, request);
   }
 
+  std::cerr << "[BERGAMOT_SERVICE] translateMultipleRaw: Starting batch processing loop" << std::endl;
   Batch batch;
   Ptr<TranslationModel> model{nullptr};
+  int batch_count = 0;
   while (batchingPool_.generateBatch(model, batch)) {
+    std::cerr << "[BERGAMOT_SERVICE] translateMultipleRaw: Translating batch " << batch_count++ << std::endl;
     model->translateBatch(/*deviceId=*/0, batch);
+    std::cerr << "[BERGAMOT_SERVICE] translateMultipleRaw: Batch " << (batch_count - 1) << " completed" << std::endl;
   }
 
+  std::cerr << "[BERGAMOT_SERVICE] translateMultipleRaw: All batches processed, returning responses" << std::endl;
   return responses;
 }
 
