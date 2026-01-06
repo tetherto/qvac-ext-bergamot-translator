@@ -181,6 +181,7 @@ class HTML {
   /// Utilities to test whether subword `str` is part of a word together with
   /// the subword `prev`, or a separate word. Basically *does `str` start with
   /// a space, but bit more complex to deal with punctuation.
+  bool isContinuation(marian::string_view prev, marian::string_view str) const;
   bool isContinuation(std::string_view prev, std::string_view str) const;
 
   /// Copies span pointers from the subwords/tokens from the source text to the
