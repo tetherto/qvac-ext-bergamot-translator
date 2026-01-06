@@ -766,7 +766,11 @@ void HTML::hardAlignments(Response const &response, std::vector<std::vector<size
     for (size_t t = 1; t + 1 < response.target.numWords(sentenceIdx); ++t) {
       // If this token is a continuation of a previous token, pick the tags from the most
       // prevalent token for the whole word.
-      if (isContinuation(response.target.word(sentenceIdx, t - 1), response.target.word(sentenceIdx, t))) {
+      if (isContinuation(
+              std::string_view(response.target.word(sentenceIdx, t - 1).data(),
+                               response.target.word(sentenceIdx, t - 1).size()),
+              std::string_view(response.target.word(sentenceIdx, t).data(),
+                               response.target.word(sentenceIdx, t).size()))) {
         // Note: only looking at the previous token since that will already
         // have this treatment applied to it.
         size_t currSentenceIdx = alignments.back()[t];
@@ -788,7 +792,11 @@ void HTML::hardAlignments(Response const &response, std::vector<std::vector<size
 
             // Stop if this was the first token or the beginning of the word
             if (i == 0 ||
-                !isContinuation(response.target.word(sentenceIdx, i - 1), response.target.word(sentenceIdx, i)))
+                !isContinuation(
+                    std::string_view(response.target.word(sentenceIdx, i - 1).data(),
+                                     response.target.word(sentenceIdx, i - 1).size()),
+                    std::string_view(response.target.word(sentenceIdx, i).data(),
+                                     response.target.word(sentenceIdx, i).size())))
               break;
           }
         } else {
