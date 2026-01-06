@@ -734,17 +734,11 @@ void HTML::annotateTagStack(Response const &response, std::vector<SpanIterator> 
 // to determine whether we should share the markup, or whether we should see
 // this token as a fresh start. This implementation will treat "hello[world]"
 // as 4 words, assuming its tokenised as something like `h ell o [ wor ld ]`.
-bool HTML::isContinuation(marian::string_view prev, marian::string_view str) const {
+bool HTML::isContinuation(std::string_view prev, std::string_view str) const {
   if (options_.continuationDelimiters.empty()) return false;
   if (prev.empty() || str.empty()) return false;
   return options_.continuationDelimiters.find(str[0]) == std::string::npos &&
          options_.continuationDelimiters.find(prev.back()) == std::string::npos;
-}
-
-bool HTML::isContinuation(std::string_view prev, std::string_view str) const {
-  return isContinuation(
-      marian::string_view(prev.data(), prev.size()),
-      marian::string_view(str.data(), str.size()));
 }
 
 /// Selects for each token in `response.target` a best source token from
