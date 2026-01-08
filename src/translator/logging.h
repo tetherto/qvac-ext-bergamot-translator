@@ -1,4 +1,4 @@
-#include "3rd_party/marian-dev/src/3rd_party/spdlog/spdlog.h"
+#include "spdlog/spdlog.h"
 #include "common/logging.h"
 
 namespace marian {
