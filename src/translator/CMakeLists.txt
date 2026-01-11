@@ -42,7 +42,6 @@ find_package(intgemm CONFIG)
 find_package(simd_utils REQUIRED CONFIG)
 find_package(ruy REQUIRED CONFIG)
 find_package(marian-dev REQUIRED CONFIG)
-find_package(pcre2 REQUIRED CONFIG)
 find_package(ssplit REQUIRED CONFIG)
 
 target_link_libraries(bergamot-translator marian-dev::marian-dev ssplit::ssplit)
