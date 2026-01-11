@@ -6,11 +6,6 @@ if(COMPILE_WASM)
   add_link_options(${WASM_LINK_FLAGS})
 endif(COMPILE_WASM)
 
-add_subdirectory(ssplit-cpp EXCLUDE_FROM_ALL)
-
-get_property(INCLUDE_DIRECTORIES DIRECTORY ssplit-cpp/src PROPERTY INCLUDE_DIRECTORIES)
-target_include_directories(ssplit PUBLIC ${INCLUDE_DIRECTORIES})
-
 set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} PARENT_SCOPE)    
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} PARENT_SCOPE)    
 
