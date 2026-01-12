@@ -1,7 +1,3 @@
-[submodule "3rd_party/marian-dev"]
-	path = 3rd_party/marian-dev
-	url = https://github.com/tetherto/qvac-ext-marian-dev.git
-	branch = master
 [submodule "bergamot-translator-tests"]
 	path = bergamot-translator-tests
 	url = https://github.com/browsermt/bergamot-translator-tests
