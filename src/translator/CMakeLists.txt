@@ -38,7 +38,13 @@ if(ENABLE_CACHE_STATS)
     target_compile_definitions(bergamot-translator PUBLIC ENABLE_CACHE_STATS)
 endif(ENABLE_CACHE_STATS)
 
-target_link_libraries(bergamot-translator marian ssplit)
+find_package(intgemm CONFIG)
+find_package(simd_utils REQUIRED CONFIG)
+find_package(ruy REQUIRED CONFIG)
+find_package(marian-dev REQUIRED CONFIG)
+find_package(ssplit REQUIRED CONFIG)
+
+target_link_libraries(bergamot-translator marian-dev::marian-dev ssplit::ssplit)
 
 target_include_directories(bergamot-translator
     PUBLIC ${PROJECT_SOURCE_DIR}
