@@ -26,6 +26,16 @@ if (USE_WASM_COMPATIBLE_SOURCE)
   target_compile_definitions(bergamot-translator PUBLIC USE_SSE2 WASM_COMPATIBLE_SOURCE)
 endif()
 
+if(${CMAKE_TARGET_ARCHITECTURE_CODE} MATCHES "arm")
+    target_compile_definitions(bergamot-translator PUBLIC ARM FMA SSE)
+endif()
+
+if(MSVC AND (CMAKE_CXX_COMPILER_ID STREQUAL "Clang"))
+  target_compile_options(bergamot-translator PUBLIC /clang:-flax-vector-conversions)
+elseif(NOT MSVC)
+  target_compile_options(bergamot-translator PUBLIC -flax-vector-conversions)
+endif()
+
 if(COMPILE_WASM)
   target_compile_definitions(bergamot-translator PUBLIC WASM)
   # Enable code that is required for generating JS bindings
