@@ -1,0 +1,28 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(marian-dev CONFIG)
+find_dependency(ssplit CONFIG)
+find_dependency(protobuf CONFIG)
+find_dependency(ruy CONFIG)
+
+# Only try intgemm on non-Android x86/x64
+if(DEFINED VCPKG_TARGET_ARCHITECTURE)
+  if((VCPKG_TARGET_ARCHITECTURE STREQUAL "x86" OR VCPKG_TARGET_ARCHITECTURE STREQUAL "x64")
+     AND NOT VCPKG_TARGET_IS_ANDROID)
+    find_package(intgemm CONFIG QUIET)
+  else()
+      find_package(simd_utils CONFIG REQUIRED)
+  endif()
+else()
+  # Fallback when not using vcpkg toolchain
+  if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^(arm|aarch64|arm64)$"
+     AND NOT CMAKE_SYSTEM_NAME STREQUAL "Android")
+    find_package(intgemm CONFIG QUIET)
+  else()
+      find_package(simd_utils CONFIG REQUIRED)
+  endif()
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/bergamot_translatorTargets.cmake")
+check_required_components(bergamot_translator)
