@@ -80,3 +80,4 @@ A short example of how to use the APIs is provided in `app/bergamot.cpp` file.
 ### Using WASM version
 
 Please follow the `README` inside the `wasm` folder of this repository that demonstrates how to use the translator in JavaScript.
+
