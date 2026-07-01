@@ -27,9 +27,9 @@ concurrency:
 
 jobs:
   baseline:
-    # Pinned to the 0.1.0 tag's immutable commit SHA per the org freeze-and-pin
-    # convention for reusable workflows (never `@main`).
-    uses: tetherto/qvac-actions/.github/workflows/public-reusable-security.yml@38693d9315c5fb6bba1354d8d1ef9823bf6c10a3 # 0.1.0
+    # Pinned to the codeql-build-mode enhancement commit (qvac-actions#10).
+    # INTERIM: repin to the release tag once that PR merges and is tagged.
+    uses: tetherto/qvac-actions/.github/workflows/public-reusable-security.yml@60b05d32d0c18fb27fbd5c3a8442d07185312336 # qvac-actions#10 (pre-release)
     permissions:
       contents: read
       security-events: write
@@ -37,13 +37,15 @@ jobs:
       actions: read
     with:
       # C/C++ fork: set languages explicitly (CodeQL autodetect misses C/C++).
-      # CodeQL uses autobuild for c-cpp; this repo may need per-repo build
-      # tuning before the run goes green — tracked as a follow-up, which is why
-      # the PR is opened as a draft.
       languages: c-cpp
       severity-threshold: high
       # These repos use GitHub "Default setup" for code scanning, which rejects
       # SARIF from advanced workflows. Skip the upload; the severity gate and
       # TruffleHog still run (SARIF is written locally for the gate to read).
       codeql-upload: never
+      # Buildless C/C++ extraction: these forks use git submodules that CodeQL's
+      # checkout does not fetch, so autobuild fails to configure (CMake
+      # add_subdirectory of an empty submodule dir). 'none' scans without
+      # compiling and needs no submodules.
+      codeql-build-mode: none
     secrets: inherit
