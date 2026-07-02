@@ -48,4 +48,3 @@ jobs:
       # add_subdirectory of an empty submodule dir). 'none' scans without
       # compiling and needs no submodules.
       codeql-build-mode: none
-    secrets: inherit
