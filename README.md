@@ -1,4 +1,4 @@
-# Bergamot Translator
+# Bergamot Translator Android
 
 [![CircleCI badge](https://img.shields.io/circleci/project/github/browsermt/bergamot-translator/main.svg?label=CircleCI)](https://circleci.com/gh/browsermt/bergamot-translator/)
 
