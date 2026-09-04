@@ -1,0 +1,22 @@
+# Specialized GitHub Actions runner labels for qvac-ext-bergamot-translator CI.
+# Edit this file, then run: node .github/scripts/sync-runner-names.mjs
+#
+# ubuntu-latest / macos-latest / windows-latest are intentionally omitted; keep
+# them hardcoded as GitHub's rolling aliases.
+#
+# FORMAT CONTRACT: a flat `key: value # comment` list, one entry per line. The
+# parser (.github/scripts/lib/runner-names.mjs) is line-based, not YAML. A value
+# is EITHER a bare single label (`windows-2019`) OR a flow array of bare tokens
+# (`[self-hosted, Linux, X64]`). Do not quote values or nest maps (the parser
+# fails loudly).
+#
+# SCOPE: this catalog governs only where jobs RUN (runs-on / matrix.runner). It
+# does NOT manage `matrix.os` identities themselves — where a matrix job's
+# runs-on depends on the lane, drive it from these outputs via a conditional
+# keyed on matrix.os (see .github/RUNNERS.md).
+
+# GitHub-hosted (pinned images)
+ubuntu_2004: ubuntu-20.04 # Ubuntu 20.04 hosted x64
+ubuntu_2204: ubuntu-22.04 # Ubuntu 22.04 hosted x64
+macos_12: macos-12 # macOS 12 hosted x64
+windows_2019: windows-2019 # Windows Server 2019 hosted x64

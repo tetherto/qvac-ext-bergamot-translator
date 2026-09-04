@@ -17,7 +17,13 @@ env:
   ccache_version: '4.5'
 
 jobs:
+  runner_names:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/reusable-runner-names.yml
+
   build-windows:
+    needs: runner_names
     strategy:
       matrix:
         include:
@@ -25,7 +31,7 @@ jobs:
           - name: "Windows CPU-only"
             identifier: "windows-x64"
 
-    runs-on: windows-2019
+    runs-on: ${{ needs.runner_names.outputs.windows_2019 }}
     name: ${{ matrix.name }}
 
     steps:
@@ -126,3 +132,4 @@ jobs:
     - name: ccache epilog
       run: |-
         ${{github.workspace}}\\ccache.exe -sv # Print current cache stats
+
