@@ -257,7 +257,8 @@ jobs:
         - name: Setup nodejs
           uses: actions/setup-node@v3
           with:
-            node-version: 18
+            node-version: lts/*
+            check-latest: true
 
         - name: Test run
           working-directory: wasm
@@ -295,7 +296,8 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: lts/*
+          check-latest: true
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm publish
